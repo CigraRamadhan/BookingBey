@@ -7,22 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserMiddleware
+class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Cek apakah user sudah login
+        // Cek apakah user login
         if (!Auth::check()) {
             return redirect()->route('login')
                 ->with('error', 'Silakan login terlebih dahulu!');
         }
 
-        // Cek apakah user memiliki role 'user' atau 'admin'
-        $user = Auth::user();
-        if (!in_array($user->role, ['user', 'admin'])) {
-            Auth::logout();
-            return redirect()->route('login')
-                ->with('error', 'Akun Anda tidak memiliki akses!');
+        // Cek apakah user memiliki role 'admin'
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('dashboard')
+                ->with('error', 'Anda tidak memiliki akses sebagai admin!');
         }
 
         return $next($request);

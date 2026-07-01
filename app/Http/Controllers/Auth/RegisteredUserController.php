@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -26,20 +25,27 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'no_hp' => ['nullable', 'string', 'max:15'],
+            'gender' => ['nullable', 'string', 'in:Laki-laki,Perempuan'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'nama_lengkap' => $request->nama_lengkap,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'no_hp' => $request->no_hp,
+            'gender' => $request->gender,
+            'role' => 'user',
         ]);
 
         event(new Registered($user));
