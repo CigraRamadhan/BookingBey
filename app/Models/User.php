@@ -2,31 +2,57 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+        'no_telepon',
+        'alamat',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relasi dengan Booking
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    // Relasi dengan Payment
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    // Cek apakah user adalah admin
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    // Cek apakah user adalah user biasa
+    public function isUser()
+    {
+        return $this->role === 'user';
     }
 }

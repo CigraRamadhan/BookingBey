@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Schema; // ← Pastikan ini Schema, BUKAN SSchema
 
 return new class extends Migration
 {
@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        SSchema::create('lapangans', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->text('description');
-    $table->string('location');
-    $table->decimal('price_per_hour', 10, 2);
-    $table->string('image')->nullable();
-    $table->enum('status', ['available', 'booked', 'maintenance'])->default('available');
-    $table->timestamps();
-});
+        Schema::create('lapangans', function (Blueprint $table) { // ← Schema (bukan SSchema)
+            $table->id();
+            $table->string('nama');
+            $table->text('deskripsi')->nullable();
+            $table->string('lokasi');
+            $table->decimal('harga_per_jam', 15, 2);
+            $table->enum('status', ['available', 'unavailable'])->default('available');
+            $table->string('gambar')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

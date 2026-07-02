@@ -6,28 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('user_id')->constrained()->onDelete('cascade');
-    $table->foreignId('lapangan_id')->constrained()->onDelete('cascade');
-    $table->date('booking_date');
-    $table->time('start_time');
-    $table->time('end_time');
-    $table->decimal('total_price', 10, 2);
-    $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])->default('pending');
-    $table->text('notes')->nullable();
-    $table->timestamps();
-});
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('lapangan_id')->constrained()->onDelete('cascade');
+            $table->date('tanggal_booking');
+            $table->time('jam_mulai');
+            $table->time('jam_selesai');
+            $table->integer('durasi');
+            $table->decimal('total_harga', 15, 2);
+            $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])->default('pending');
+            $table->timestamps();
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('bookings');
