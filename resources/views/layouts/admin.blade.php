@@ -23,29 +23,31 @@
 
 </head>
 
-<body>
 
+<body>
+    
     {{-- Sidebar --}}
     @include('components.admin-sidebar')
-
+    
     {{-- Main Content --}}
     <div class="main-content">
-
+        
         {{-- Navbar --}}
         @include('components.admin-navbar')
-
+        
         {{-- Page Content --}}
         <div class="container-fluid py-4">
-
+            
             @yield('content')
-
+            
         </div>
-
+        
     </div>
-
+    
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
+    
+    @yield('scripts')
 </body>
 
 </html>

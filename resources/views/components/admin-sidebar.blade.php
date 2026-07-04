@@ -39,7 +39,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="{{ route('admin.booking.index') }}"
+            <a href="#"
                 class="nav-link {{ request()->routeIs('admin.booking.*') ? 'active' : '' }}">
                 <i class="bi bi-calendar2-week"></i>
                 Booking
@@ -47,7 +47,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="{{ route('admin.payments.index') }}"
+            <a href="#"
                 class="nav-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
                 <i class="bi bi-credit-card"></i>
                 Payments
@@ -55,7 +55,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="{{ route('admin.users.index') }}"
+            <a href="#"
                 class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <i class="bi bi-people"></i>
                 Users

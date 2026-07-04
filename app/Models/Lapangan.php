@@ -12,6 +12,7 @@ class Lapangan extends Model
     protected $fillable = [
         'nama_lapangan',
         'lokasi',
+        'jenis',
         'harga_per_jam',
         'deskripsi',
         'gambar',
@@ -26,13 +27,11 @@ class Lapangan extends Model
 
     // Accessor gambar
     public function getGambarUrlAttribute()
-    {
-        if ($this->gambar && file_exists(storage_path('app/public/lapangan/' . $this->gambar))) {
-            return asset('storage/lapangan/' . $this->gambar);
-        }
-        return asset('images/default-lapangan.jpg');
-    }
-
+{
+    return $this->gambar
+        ? asset('storage/' . $this->gambar)
+        : asset('images/default-lapangan.jpg');
+}
     // Scope tersedia
     public function scopeTersedia($query)
     {
