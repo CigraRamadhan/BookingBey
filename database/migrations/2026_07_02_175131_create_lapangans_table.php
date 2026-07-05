@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('lapangans', function (Blueprint $table) { // ← Schema (bukan SSchema)
             $table->id();
             $table->string('nama');
+            $table->string('jenis');
             $table->text('deskripsi')->nullable();
             $table->string('lokasi');
             $table->decimal('harga_per_jam', 15, 2);

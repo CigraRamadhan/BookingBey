@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -18,18 +19,31 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'no_telepon' => 'nullable|string|max:15',
-            'alamat' => 'nullable|string'
+            'alamat' => 'nullable|string',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user->update($request->all());
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
 
-        return redirect()->route('user.profile')
-                        ->with('success', 'Profil berhasil diupdate!');
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->no_telepon = $request->no_telepon;
+        $user->alamat = $request->alamat;
+        $user->save();
+
+        return redirect()->route('user.profile')->with('success', 'Profil berhasil diupdate!');
     }
 
     public function updatePassword(Request $request)
@@ -49,7 +63,20 @@ class ProfileController extends Controller
             'password' => Hash::make($request->new_password)
         ]);
 
-        return redirect()->route('user.profile')
-                        ->with('success', 'Password berhasil diubah!');
+        return redirect()->route('user.profile')->with('success', 'Password berhasil diubah!');
+    }
+
+    public function destroy()
+    {
+        $user = Auth::user();
+
+        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        Auth::logout();
+        $user->delete();
+
+        return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
     }
 }

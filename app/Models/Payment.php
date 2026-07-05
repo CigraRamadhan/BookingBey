@@ -27,4 +27,25 @@ class Payment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getPaymentMethodLabelAttribute(): string
+    {
+        return match ($this->payment_method) {
+            'bank_transfer' => 'Transfer Bank',
+            'credit_card' => 'Kartu Kredit',
+            'e_wallet' => 'E-Wallet',
+            'qris' => 'QRIS',
+            default => ucfirst((string) $this->payment_method),
+        };
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            'pending' => 'Menunggu Pembayaran',
+            'confirmed' => 'Dikonfirmasi',
+            'cancelled' => 'Dibatalkan',
+            default => ucfirst((string) $this->status),
+        };
+    }
 }

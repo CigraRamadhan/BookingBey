@@ -7,12 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
+       body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
         .card {
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
@@ -53,9 +55,10 @@
             padding: 12px;
             font-weight: bold;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        .btn-primary:hover{
+        transform:translateY(-2px);
+        box-shadow:0 10px 20px rgba(102,126,234,.3);
+        
         }
         .register-link {
             color: #667eea;
@@ -79,12 +82,115 @@
         .form-icon .form-control {
             padding-left: 45px;
         }
+
+         input {
+        font-size: 16px;
+    }
+        /* ==========================
+   RESPONSIVE
+========================== */
+
+.card{
+    width:100%;
+}
+
+@media (max-width: 992px){
+
+    .card-body{
+        padding:30px;
+    }
+
+    .card-header{
+        padding:25px;
+    }
+
+    .card-header h3{
+        font-size:1.6rem;
+    }
+
+}
+
+@media (max-width:768px){
+
+    body{
+        padding:15px;
+        align-items:flex-start;
+    }
+
+    .container{
+        padding:0;
+    }
+
+    .card{
+        border-radius:15px;
+    }
+
+    .card-body{
+        padding:25px 20px;
+    }
+
+    .card-header{
+        padding:20px;
+    }
+
+    .card-header h3{
+        font-size:1.4rem;
+    }
+
+    .card-header p{
+        font-size:.9rem;
+    }
+
+    .form-control{
+        padding:12px 15px 12px 45px;
+        font-size:15px;
+    }
+
+    .btn-primary{
+        padding:12px;
+        font-size:16px;
+    }
+
+    .register-link{
+        word-break:break-word;
+    }
+    
+
+}
+
+@media (max-width:576px){
+
+    .card-body{
+        padding:20px 15px;
+    }
+
+    .card-header h3{
+        font-size:1.2rem;
+    }
+
+    .card-header p{
+        font-size:.85rem;
+    }
+
+    .form-control{
+        font-size:14px;
+    }
+
+    .btn-primary{
+        font-size:15px;
+    }
+
+    .alert{
+        font-size:14px;
+    }
+
+}
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-futbol me-2"></i>Sport Booking</h3>
@@ -124,7 +230,7 @@
                                 <input type="checkbox" class="form-check-input" id="remember" name="remember">
                                 <label class="form-check-label" for="remember">Remember Me</label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">
+                            <button type="submit" class="btn btn-primary w-100 py-3">
                                 <i class="fas fa-sign-in-alt me-2"></i>Login
                             </button>
                         </form>

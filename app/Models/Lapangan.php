@@ -11,6 +11,7 @@ class Lapangan extends Model
 
     protected $fillable = [
         'nama',
+        'jenis',
         'deskripsi',
         'harga_per_jam',
         'status',
@@ -21,6 +22,12 @@ class Lapangan extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+    public function getGambarUrlAttribute()
+    {
+        return $this->gambar
+        ? asset('storage/' . $this->gambar)
+        : asset('images/default-lapangan.jpg');
     }
 
     public function getStatusBadgeAttribute()

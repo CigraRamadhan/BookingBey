@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    }
         .card {
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
         .card-header {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 30px;
             text-align: center;
             border: none;
@@ -43,27 +45,27 @@
             border: 2px solid #e1e5eb;
         }
         .form-control:focus {
-            border-color: #f5576c;
-            box-shadow: 0 0 0 0.2rem rgba(245, 87, 108, 0.25);
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
-        .btn-success {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             border-radius: 10px;
             padding: 12px;
             font-weight: bold;
         }
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+          .btn-primary:hover{
+        transform:translateY(-2px);
+        box-shadow:0 10px 20px rgba(102,126,234,.3);
         }
         .login-link {
-            color: #f5576c;
+            color: #667eea;
             text-decoration: none;
             font-weight: bold;
         }
         .login-link:hover {
-            color: #d63384;
+            color: #764ba2;
             text-decoration: underline;
         }
         .form-icon {
@@ -79,12 +81,104 @@
         .form-icon .form-control {
             padding-left: 45px;
         }
+        input{
+    font-size:16px;
+    }
+    /* =======================
+   RESPONSIVE
+======================= */
+
+.card{
+    width:100%;
+}
+
+@media (max-width:992px){
+
+    .card-body{
+        padding:30px;
+    }
+
+    .card-header{
+        padding:25px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    body{
+        padding:15px;
+        align-items:flex-start;
+    }
+
+    .container{
+        padding:0;
+    }
+
+    .card{
+        border-radius:15px;
+    }
+
+    .card-header{
+        padding:20px;
+    }
+
+    .card-header h3{
+        font-size:1.5rem;
+    }
+
+    .card-header p{
+        font-size:.9rem;
+    }
+
+    .card-body{
+        padding:25px 20px;
+    }
+
+    .form-control{
+        font-size:15px;
+        padding:12px 15px 12px 45px;
+    }
+
+    .btn-primary{
+        font-size:16px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .card-body{
+        padding:20px 15px;
+    }
+
+    .card-header h3{
+        font-size:1.25rem;
+    }
+
+    .card-header p{
+        font-size:.85rem;
+    }
+
+    .form-control{
+        font-size:14px;
+    }
+
+    .btn-primary{
+        font-size:15px;
+    }
+
+    .alert{
+        font-size:14px;
+    }
+
+}
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-futbol me-2"></i>Sport Booking</h3>
@@ -133,7 +227,7 @@
                                 <input type="password" class="form-control" id="password_confirmation" 
                                        name="password_confirmation" placeholder="Konfirmasi Password" required>
                             </div>
-                            <button type="submit" class="btn btn-success w-100">
+                            <button type="submit" class="btn btn-primary w-100 py-3">
                                 <i class="fas fa-user-plus me-2"></i>Daftar
                             </button>
                         </form>

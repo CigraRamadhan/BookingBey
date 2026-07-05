@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -17,6 +18,10 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
+        if (Auth::check()) {
+            return $this->redirectAuthenticatedUser();
+        }
+
         return view('auth.register');
     }
 
@@ -46,7 +51,21 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('user.dashboard')
+        return redirect()->intended($this->dashboardRoute($user))
                         ->with('success', 'Selamat datang ' . $user->name . '! Akun Anda berhasil dibuat.');
+    }
+
+    protected function redirectAuthenticatedUser()
+    {
+        return redirect()->intended($this->dashboardRoute(Auth::user()));
+    }
+
+    protected function dashboardRoute($user)
+    {
+        if ($user->role === 'admin' && Route::has('admin.dashboard')) {
+            return route('admin.dashboard');
+        }
+
+        return route('user.dashboard');
     }
 }

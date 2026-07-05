@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -13,6 +14,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
+        if (Auth::check()) {
+            return $this->redirectAuthenticatedUser();
+        }
+
         return view('auth.login');
     }
 
@@ -32,12 +37,8 @@ class AuthenticatedSessionController extends Controller
             // Cek role user
             $user = Auth::user();
             
-            if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
-            }
-
-            return redirect()->route('user.dashboard')
-                           ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
+            return redirect()->intended($this->dashboardRoute($user))
+                ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
         }
 
         return back()->withErrors([
@@ -57,5 +58,19 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/')
                ->with('success', 'Anda berhasil logout. Sampai jumpa!');
+    }
+
+    protected function redirectAuthenticatedUser()
+    {
+        return redirect()->intended($this->dashboardRoute(Auth::user()));
+    }
+
+    protected function dashboardRoute($user)
+    {
+        if ($user->role === 'admin' && Route::has('admin.dashboard')) {
+            return route('admin.dashboard');
+        }
+
+        return route('user.dashboard');
     }
 }

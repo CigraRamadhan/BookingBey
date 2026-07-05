@@ -36,7 +36,7 @@
                             <option value="bank_transfer">🏦 Bank Transfer</option>
                             <option value="credit_card">💳 Kartu Kredit</option>
                             <option value="e_wallet">📱 E-Wallet</option>
-                            <option value="cash">💵 Tunai</option>
+                            <option value="qris">📲 QRIS</option>
                         </select>
                     </div>
 
