@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Lapangan;
 
 class LapanganController extends Controller
@@ -49,16 +50,50 @@ class LapanganController extends Controller
 
     public function edit(Lapangan $lapangan)
     {
-        //
+        return response()->json($lapangan);
     }
 
-    public function update(Lapangan $lapangan)
+    public function update(Request $request, Lapangan $lapangan)
     {
-        //
+        $validated = $request->validate([
+            'nama_lapangan' => 'required|string|max:255',
+            'jenis' => 'required',
+            'lokasi' => 'required',
+            'harga_per_jam' => 'required|numeric',
+            'deskripsi' => 'nullable|string',
+            'status' => 'required',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+
+            // Hapus gambar lama
+            if ($lapangan->gambar && Storage::disk('public')->exists($lapangan->gambar)) {
+                Storage::disk('public')->delete($lapangan->gambar);
+            }
+
+            $validated['gambar'] = $request
+                ->file('gambar')
+                ->store('lapangan', 'public');
+        }
+
+        $lapangan->update($validated);
+
+        return redirect()
+            ->route('admin.lapangan.index')
+            ->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy(Lapangan $lapangan)
     {
-        //
+        if ($lapangan->gambar) {
+            Storage::disk('public')->delete($lapangan->gambar);
+        }
+
+        $lapangan->delete();
+
+        return redirect()
+            ->route('admin.lapangan.index')
+            ->with('success', 'Lapangan berhasil dihapus.');
     }
 }
