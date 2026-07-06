@@ -78,47 +78,47 @@ body {
 SIDEBAR HEADER
 ============================ */
 
-.sidebar-header{
+.sidebar-header {
 
-    padding:30px 20px;
-
-}
-
-.logo-icon{
-
-    width:65px;
-
-    height:65px;
-
-    border-radius:18px;
-
-    margin:auto;
-
-    background:#2563EB;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:28px;
-
-    color:white;
+    padding: 30px 20px;
 
 }
 
-.logo-title{
+.logo-icon {
 
-    font-weight:700;
+    width: 65px;
 
-    margin-top:15px;
+    height: 65px;
+
+    border-radius: 18px;
+
+    margin: auto;
+
+    background: #2563EB;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 28px;
+
+    color: white;
 
 }
 
-.sidebar-divider{
+.logo-title {
 
-    border-color:rgba(255,255,255,.08);
+    font-weight: 700;
+
+    margin-top: 15px;
+
+}
+
+.sidebar-divider {
+
+    border-color: rgba(255, 255, 255, .08);
 
 }
 
@@ -126,57 +126,57 @@ SIDEBAR HEADER
 MENU
 ============================ */
 
-.sidebar-menu{
+.sidebar-menu {
 
-    padding:15px;
-
-}
-
-.sidebar-menu .nav-link{
-
-    color:#CBD5E1;
-
-    border-radius:12px;
-
-    margin-bottom:10px;
-
-    padding:14px 18px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    transition:.3s;
-
-    font-weight:500;
+    padding: 15px;
 
 }
 
-.sidebar-menu .nav-link i{
+.sidebar-menu .nav-link {
 
-    font-size:20px;
+    color: #CBD5E1;
+
+    border-radius: 12px;
+
+    margin-bottom: 10px;
+
+    padding: 14px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    transition: .3s;
+
+    font-weight: 500;
 
 }
 
-.sidebar-menu .nav-link:hover{
+.sidebar-menu .nav-link i {
 
-    background:#1E293B;
-
-    color:white;
-
-    transform:translateX(6px);
+    font-size: 20px;
 
 }
 
-.sidebar-menu .nav-link.active{
+.sidebar-menu .nav-link:hover {
 
-    background:#2563EB;
+    background: #1E293B;
 
-    color:white;
+    color: white;
 
-    box-shadow:0 8px 20px rgba(37,99,235,.35);
+    transform: translateX(6px);
+
+}
+
+.sidebar-menu .nav-link.active {
+
+    background: #2563EB;
+
+    color: white;
+
+    box-shadow: 0 8px 20px rgba(37, 99, 235, .35);
 
 }
 
@@ -184,12 +184,64 @@ MENU
 LOGOUT
 ============================ */
 
-.sidebar .btn-danger{
+.sidebar .btn-danger {
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    padding:12px;
+    padding: 12px;
 
-    font-weight:600;
+    font-weight: 600;
+
+}
+
+/* ==========================
+RESPONSIVE
+========================== */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+
+        width: 100%;
+        height: auto;
+        position: relative;
+
+    }
+
+    .main-content {
+
+        margin-left: 0;
+
+    }
+
+    .admin-navbar {
+
+        padding: 15px;
+
+    }
+
+}
+
+.icon-box {
+
+    width: 60px;
+
+    height: 60px;
+
+    border-radius: 16px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 24px;
+
+}
+
+.dashboard-card{
+
+    height:100%;
 
 }

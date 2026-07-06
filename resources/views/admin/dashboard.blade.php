@@ -172,89 +172,92 @@
 
         <div class="card-body">
 
-            <table class="table table-hover align-middle">
+            <div class="table-responsive">
 
-                <thead>
+                <table class="table table-hover align-middle">
 
-                    <tr>
+                    <thead>
 
-                        <th>Customer</th>
+                        <tr>
 
-                        <th>Lapangan</th>
+                            <th>Customer</th>
 
-                        <th>Tanggal</th>
+                            <th>Lapangan</th>
 
-                        <th>Status</th>
+                            <th>Tanggal</th>
 
-                    </tr>
+                            <th>Status</th>
 
-                </thead>
+                        </tr>
 
-                <tbody>
+                    </thead>
 
-                    <tr>
+                    <tbody>
 
-                        <td>Andi</td>
+                        <tr>
 
-                        <td>Futsal A</td>
+                            <td>Andi</td>
 
-                        <td>12 Juli 2026</td>
+                            <td>Futsal A</td>
 
-                        <td>
+                            <td>12 Juli 2026</td>
 
-                            <span class="badge bg-success">
+                            <td>
 
-                                Approved
+                                <span class="badge bg-success">
 
-                            </span>
+                                    Approved
 
-                        </td>
+                                </span>
 
-                    </tr>
+                            </td>
 
-                    <tr>
+                        </tr>
 
-                        <td>Budi</td>
+                        <tr>
 
-                        <td>Badminton B</td>
+                            <td>Budi</td>
 
-                        <td>13 Juli 2026</td>
+                            <td>Badminton B</td>
 
-                        <td>
+                            <td>13 Juli 2026</td>
 
-                            <span class="badge bg-warning">
+                            <td>
 
-                                Pending
+                                <span class="badge bg-warning">
 
-                            </span>
+                                    Pending
 
-                        </td>
+                                </span>
 
-                    </tr>
+                            </td>
 
-                    <tr>
+                        </tr>
 
-                        <td>Siti</td>
+                        <tr>
 
-                        <td>Basket Indoor</td>
+                            <td>Siti</td>
 
-                        <td>15 Juli 2026</td>
+                            <td>Basket Indoor</td>
 
-                        <td>
+                            <td>15 Juli 2026</td>
 
-                            <span class="badge bg-danger">
+                            <td>
 
-                                Cancelled
+                                <span class="badge bg-danger">
 
-                            </span>
+                                    Cancelled
 
-                        </td>
+                                </span>
 
-                    </tr>
+                            </td>
 
-                </tbody>
+                        </tr>
 
-            </table>
+                    </tbody>
+
+                </table>
+            </div>
 
         </div>
 
@@ -274,7 +277,7 @@
 
         </div>
 
-        <div class="card-body">
+        <div style="position:relative;height:350px;">
 
             <canvas id="bookingChart" height="100"></canvas>
 
@@ -318,6 +321,26 @@
 
         });
 
+        new Chart(ctx, {
+
+            type: 'line',
+
+            data: { ...},
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false
+
+            }
+
+                options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+        
     </script>
 
 @endsection
