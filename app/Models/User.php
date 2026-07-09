@@ -11,13 +11,13 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
+        'nama_lengkap',
         'email',
         'password',
+        'no_hp',
+        'gender',
+        'profil',
         'role',
-        'no_telepon',
-        'alamat',
-        'avatar',
     ];
 
     protected $hidden = [
@@ -33,7 +33,8 @@ class User extends Authenticatable
         ];
     }
 
-    // Relasi dengan Booking
+    // Relasi ke booking
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);
@@ -46,6 +47,17 @@ class User extends Authenticatable
     }
 
     // Cek apakah user adalah admin
+    // Accessor foto profil
+
+    public function getProfilUrlAttribute()
+    {
+        if ($this->profil && file_exists(storage_path('app/public/profil/' . $this->profil))) {
+            return asset('storage/profil/' . $this->profil);
+        }
+        return asset('images/default-avatar.png');
+    }
+
+    // Cek admin
     public function isAdmin()
     {
         return $this->role === 'admin';

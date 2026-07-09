@@ -10,28 +10,31 @@ class Lapangan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama',
+        'nama_lapangan',
+        'lokasi',
         'jenis',
-        'deskripsi',
         'harga_per_jam',
-        'status',
+        'deskripsi',
         'gambar',
-        'lokasi'
+        'status',
     ];
 
+    // Relasi ke booking
     public function bookings()
     {
         return $this->hasMany(Booking::class);
     }
+
+    // Accessor gambar
     public function getGambarUrlAttribute()
-    {
-        return $this->gambar
+{
+    return $this->gambar
         ? asset('storage/' . $this->gambar)
         : asset('images/default-lapangan.jpg');
-    }
-
-    public function getStatusBadgeAttribute()
+}
+    // Scope tersedia
+    public function scopeTersedia($query)
     {
-        return $this->status === 'available' ? 'Tersedia' : 'Tidak Tersedia';
+        return $query->where('status', 'tersedia');
     }
 }

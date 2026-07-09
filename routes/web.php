@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +26,4 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 
 // Include user routes
 require __DIR__.'/user.php';
+require __DIR__.'/admin.php';

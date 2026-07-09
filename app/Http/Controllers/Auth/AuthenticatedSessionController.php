@@ -36,9 +36,9 @@ class AuthenticatedSessionController extends Controller
 
             // Cek role user
             $user = Auth::user();
-            
+
             return redirect()->intended($this->dashboardRoute($user))
-                ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
+                ->with('success', 'Selamat datang kembali, ' . $user->nama_lengkap . '!');
         }
 
         return back()->withErrors([
@@ -57,7 +57,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')
-               ->with('success', 'Anda berhasil logout. Sampai jumpa!');
+            ->with('success', 'Anda berhasil logout. Sampai jumpa!');
     }
 
     protected function redirectAuthenticatedUser()
@@ -67,7 +67,7 @@ class AuthenticatedSessionController extends Controller
 
     protected function dashboardRoute($user)
     {
-        if ($user->role === 'admin' && Route::has('admin.dashboard')) {
+        if ($user->role == 'admin') {
             return route('admin.dashboard');
         }
 

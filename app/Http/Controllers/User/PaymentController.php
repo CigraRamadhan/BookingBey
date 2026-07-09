@@ -10,16 +10,24 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
+    /**
+     * Menampilkan daftar pembayaran milik user
+     */
     public function index()
     {
         $payments = Payment::with(['booking.lapangan'])
-            ->where('user_id', Auth::id())
+            ->whereHas('booking', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
             ->latest()
             ->get();
 
         return view('user.payment.index', compact('payments'));
     }
 
+    /**
+     * Menampilkan form pembayaran
+     */
     public function create($booking_id)
     {
         $booking = Booking::with('lapangan')->findOrFail($booking_id);
@@ -29,18 +37,22 @@ class PaymentController extends Controller
         }
 
         if ($booking->payment()->exists()) {
-            return redirect()->route('user.payment.show', $booking->payment->id)
-                ->with('info', 'Pembayaran untuk booking ini sudah ada.');
+            return redirect()
+                ->route('user.payment.show', $booking->payment->id)
+                ->with('info', 'Pembayaran untuk booking ini sudah dibuat.');
         }
 
         return view('user.payment.create', compact('booking'));
     }
 
+    /**
+     * Menyimpan pembayaran
+     */
     public function store(Request $request)
     {
         $request->validate([
             'booking_id' => 'required|exists:bookings,id',
-            'payment_method' => 'required|in:bank_transfer,credit_card,e_wallet,qris',
+            'metode_pembayaran' => 'required|in:cash,transfer,qris',
         ]);
 
         $booking = Booking::findOrFail($request->booking_id);
@@ -50,63 +62,77 @@ class PaymentController extends Controller
         }
 
         if ($booking->payment()->exists()) {
-            return redirect()->route('user.payment.show', $booking->payment->id)
-                ->with('info', 'Pembayaran untuk booking ini sudah ada.');
+            return redirect()
+                ->route('user.payment.show', $booking->payment->id)
+                ->with('info', 'Pembayaran sudah tersedia.');
         }
 
         $payment = Payment::create([
             'booking_id' => $booking->id,
-            'user_id' => Auth::id(),
-            'amount' => $booking->total_harga,
-            'payment_method' => $request->payment_method,
-            'status' => 'pending',
+            'kode_pembayaran' => 'PAY-' . strtoupper(uniqid()),
+            'metode_pembayaran' => $request->metode_pembayaran,
+            'jumlah_bayar' => $booking->total_harga,
+            'status_pembayaran' => 'pending',
         ]);
 
-        return redirect()->route('user.payment.show', $payment->id)
+        return redirect()
+            ->route('user.payment.show', $payment->id)
             ->with('success', 'Pembayaran berhasil dibuat.');
     }
 
+    /**
+     * Detail pembayaran
+     */
     public function show($id)
     {
-        $payment = Payment::with(['booking.lapangan'])->findOrFail($id);
+        $payment = Payment::with(['booking.lapangan'])
+            ->findOrFail($id);
 
-        if ($payment->user_id !== Auth::id()) {
+        if ($payment->booking->user_id !== Auth::id()) {
             abort(403);
         }
 
         return view('user.payment.show', compact('payment'));
     }
 
+    /**
+     * Konfirmasi pembayaran
+     */
     public function confirm($id)
     {
-        $payment = Payment::findOrFail($id);
+        $payment = Payment::with('booking')->findOrFail($id);
 
-        if ($payment->user_id !== Auth::id()) {
+        if ($payment->booking->user_id !== Auth::id()) {
             abort(403);
         }
 
         $payment->update([
-            'status' => 'confirmed',
-            'payment_date' => now(),
+            'status_pembayaran' => 'paid',
+            'tanggal_bayar' => now(),
         ]);
 
-        return redirect()->route('user.payment.show', $payment->id)
-            ->with('success', 'Pembayaran dikonfirmasi.');
+        return redirect()
+            ->route('user.payment.show', $payment->id)
+            ->with('success', 'Pembayaran berhasil dikonfirmasi.');
     }
 
+    /**
+     * Membatalkan pembayaran
+     */
     public function cancel($id)
     {
-        $payment = Payment::findOrFail($id);
+        $payment = Payment::with('booking')->findOrFail($id);
 
-        if ($payment->user_id !== Auth::id()) {
+        if ($payment->booking->user_id !== Auth::id()) {
             abort(403);
         }
 
         $payment->update([
-            'status' => 'cancelled',
+            'status_pembayaran' => 'failed',
         ]);
 
-        return redirect()->route('user.payment.show', $payment->id)
+        return redirect()
+            ->route('user.payment.show', $payment->id)
             ->with('success', 'Pembayaran dibatalkan.');
     }
 }

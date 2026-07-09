@@ -43,7 +43,7 @@
                 </ul>
                 <ul class="navbar-nav align-items-lg-center gap-2">
                     <li class="nav-item text-white small d-none d-lg-inline-flex align-items-center">
-                        <i class="fas fa-user me-1"></i> {{ Auth::user()->name }}
+                        <i class="fas fa-user me-1"></i> {{ Auth::user()->nama_lengkap }}
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.profile') }}">

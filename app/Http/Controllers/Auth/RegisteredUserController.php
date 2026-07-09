@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'no_telepon' => ['nullable', 'string', 'max:15'],
@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'no_telepon' => $request->no_telepon,
@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect()->intended($this->dashboardRoute($user))
-                        ->with('success', 'Selamat datang ' . $user->name . '! Akun Anda berhasil dibuat.');
+                        ->with('success', 'Selamat datang ' . $user->nama_lengkap . '! Akun Anda berhasil dibuat.');
     }
 
     protected function redirectAuthenticatedUser()
@@ -62,7 +62,7 @@ class RegisteredUserController extends Controller
 
     protected function dashboardRoute($user)
     {
-        if ($user->role === 'admin' && Route::has('admin.dashboard')) {
+        if ($user->role == 'admin' && Route::has('admin.dashboard')) {
             return route('admin.dashboard');
         }
 

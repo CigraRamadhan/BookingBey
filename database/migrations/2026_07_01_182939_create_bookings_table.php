@@ -15,9 +15,11 @@ return new class extends Migration
             $table->date('tanggal_booking');
             $table->time('jam_mulai');
             $table->time('jam_selesai');
-            $table->integer('durasi');
-            $table->decimal('total_harga', 15, 2);
-            $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])->default('pending');
+            $table->integer('durasi')->default(1);
+            $table->integer('harga_per_jam');
+            $table->integer('total_harga');
+            $table->enum('status_booking', ['menunggu', 'konfirmasi', 'selesai', 'batal'])->default('menunggu');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }

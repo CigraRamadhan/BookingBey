@@ -11,41 +11,16 @@ class Payment extends Model
 
     protected $fillable = [
         'booking_id',
-        'user_id',
-        'amount',
-        'payment_method',
-        'status',
-        'payment_date'
+        'kode_pembayaran',
+        'metode_pembayaran',
+        'jumlah_bayar',
+        'tanggal_bayar',
+        'bukti_pembayaran',
+        'status_pembayaran',
     ];
 
     public function booking()
     {
         return $this->belongsTo(Booking::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function getPaymentMethodLabelAttribute(): string
-    {
-        return match ($this->payment_method) {
-            'bank_transfer' => 'Transfer Bank',
-            'credit_card' => 'Kartu Kredit',
-            'e_wallet' => 'E-Wallet',
-            'qris' => 'QRIS',
-            default => ucfirst((string) $this->payment_method),
-        };
-    }
-
-    public function getStatusLabelAttribute(): string
-    {
-        return match ($this->status) {
-            'pending' => 'Menunggu Pembayaran',
-            'confirmed' => 'Dikonfirmasi',
-            'cancelled' => 'Dibatalkan',
-            default => ucfirst((string) $this->status),
-        };
     }
 }

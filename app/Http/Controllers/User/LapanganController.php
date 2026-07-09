@@ -10,7 +10,7 @@ class LapanganController extends Controller
 {
     public function index()
     {
-        $lapangans = Lapangan::where('status', 'available')->get();
+        $lapangans = Lapangan::all();
         return view('user.lapangan.index', compact('lapangans'));
     }
 
