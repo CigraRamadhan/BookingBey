@@ -8,17 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('lapangans', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_lapangan');
-            $table->string('jenis');
-            $table->string('lokasi');
-            $table->integer('harga_per_jam');
-            $table->text('deskripsi')->nullable();
-            $table->string('gambar')->nullable();
-            $table->enum('status', ['tersedia', 'tidak_tersedia'])->default('tersedia');
-            $table->timestamps();
-        });
+        // CEK APAKAH TABEL SUDAH ADA
+        if (!Schema::hasTable('lapangans')) {
+            Schema::create('lapangans', function (Blueprint $table) {
+                $table->id();
+                $table->string('nama_lapangan');
+                $table->string('jenis');
+                $table->string('lokasi');
+                $table->integer('harga_per_jam');
+                $table->text('deskripsi')->nullable();
+                $table->string('gambar')->nullable();
+                $table->enum('status', ['tersedia', 'tidak_tersedia'])->default('tersedia');
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

@@ -36,8 +36,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('user.payment.*') ? 'active' : '' }}" href="{{ route('user.payment.index') }}">
-                            <i class="fas fa-credit-card"></i> Payment
+                        <a class="nav-link {{ request()->routeIs('user.payment.*') ? 'active' : '' }}" href="{{ route('user.booking.index') }}">
+                            <i class="fas fa-credit-card"></i> Booking Saya
                         </a>
                     </li>
                 </ul>

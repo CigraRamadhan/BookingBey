@@ -19,4 +19,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('payments', PaymentController::class);
 
     Route::resource('users', UserController::class);
+    Route::get('/booking', [BookingController::class, 'index'])->name('admin.booking.index');
+    Route::get('/booking/{booking}', [BookingController::class, 'show'])->name('admin.booking.show');
+    Route::put('/booking/{booking}', [BookingController::class, 'update'])->name('admin.booking.update');
+    Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('admin.booking.destroy');
+    Route::put('/booking/{booking}/payment', [BookingController::class, 'updatePayment'])->name('admin.booking.updatePayment');
+
 });

@@ -29,12 +29,12 @@ Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(functi
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
     
     // Payment
-    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
-    Route::get('/payment/create/{booking_id}', [PaymentController::class, 'create'])->name('payment.create');
-    Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
-    Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
-    Route::get('/payment/{id}/confirm', [PaymentController::class, 'confirm'])->name('payment.confirm');
-    Route::get('/payment/{id}/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+     Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
+    Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
+    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/{booking}', [BookingController::class, 'show'])->name('booking.detail');
+    Route::post('/booking/{booking}/payment', [BookingController::class, 'payment'])->name('booking.payment');
+    Route::put('/booking/{booking}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
     
     // Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
