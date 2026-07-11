@@ -25,13 +25,13 @@ class Booking extends Model
     // Relasi ke user
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Relasi ke lapangan
     public function lapangan()
     {
-        return $this->belongsTo(Lapangan::class);
+        return $this->belongsTo(Lapangan::class,   'lapangan_id');
     }
 
     // Relasi ke payment
@@ -56,10 +56,10 @@ class Booking extends Model
     public function getStatusBadgeAttribute()
     {
         return match($this->status_booking) {
-            'menunggu' => '<span class="badge bg-warning text-dark">Menunggu</span>',
-            'konfirmasi' => '<span class="badge bg-success">Dikonfirmasi</span>',
+            'menunggu' => '<span class="badge rounded-pill bg-warning text-dark">Menunggu</span>',
+            'konfirmasi' => '<span class="badge rounded-pill bg-success">Dikonfirmasi</span>',
             'selesai' => '<span class="badge bg-info">Selesai</span>',
-            'batal' => '<span class="badge bg-danger">Dibatalkan</span>',
+            'batal' => '<span class="badge rounded-pill bg-danger">Dibatalkan</span>',
             default => '<span class="badge bg-secondary">Unknown</span>',
         };
     }

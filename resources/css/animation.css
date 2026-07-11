@@ -1,0 +1,303 @@
+/* ===========================
+   PAGE ANIMATION
+=========================== */
+
+.content{
+    animation:fadePage .45s ease;
+}
+
+@keyframes fadePage{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.btn,
+.quick-card,
+.dashboard-card{
+
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.btn:active{
+
+    transform:scale(.95);
+
+}
+
+
+/* ===========================
+   RIPPLE
+=========================== */
+
+.ripple{
+
+position:absolute;
+
+background:rgba(255,255,255,.5);
+
+border-radius:50%;
+
+transform:scale(0);
+
+animation:ripple .6s linear;
+
+pointer-events:none;
+
+}
+
+@keyframes ripple{
+
+to{
+
+transform:scale(18);
+
+opacity:0;
+
+}
+
+}
+
+
+/* ===========================
+   SIDEBAR
+=========================== */
+
+.sidebar{
+
+transition:.4s;
+
+}
+
+.sidebar a{
+
+transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+padding-left:28px;
+
+}
+
+
+/* ===========================
+   ICON
+=========================== */
+
+.dashboard-card .icon{
+
+transition:.35s;
+
+}
+
+.dashboard-card:hover .icon{
+
+transform:rotate(10deg) scale(1.15);
+
+}
+
+
+/* ===========================
+   TABLE
+=========================== */
+
+.table tbody tr{
+
+transition:.25s;
+
+}
+
+.table tbody tr:hover{
+
+background:#f5f8ff;
+
+}
+
+
+/* ===========================
+   CARD
+=========================== */
+
+.card{
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+}
+
+
+/* ===========================
+   LOADER
+=========================== */
+
+#loader{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+height:4px;
+
+width:100%;
+
+background:#2563eb;
+
+transform:scaleX(0);
+
+transform-origin:left;
+
+transition:.35s;
+
+z-index:99999;
+
+}
+
+
+/* ===========================
+   SEARCH
+=========================== */
+
+.search-box{
+
+transition:.3s;
+
+}
+
+.search-box:focus-within{
+
+box-shadow:0 0 0 4px rgba(37,99,235,.15);
+
+}
+
+
+/* ===========================
+   PROFILE
+=========================== */
+
+.avatar{
+
+transition:.3s;
+
+}
+
+.avatar:hover{
+
+transform:scale(1.08);
+
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:991px){
+
+.sidebar{
+
+left:-270px;
+
+}
+
+.sidebar.active{
+
+left:0;
+
+}
+
+.main{
+
+margin-left:0;
+
+}
+
+.topbar{
+
+padding:20px;
+
+}
+.dashboard-shadow{
+
+box-shadow:0 10px 35px rgba(0,0,0,.08);
+
+transition:.35s;
+
+}
+
+.dashboard-shadow:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 20px 40px rgba(0,0,0,.15);
+
+}
+
+.card-header{
+
+font-weight:600;
+
+}
+
+.btn{
+
+border-radius:12px;
+
+font-weight:600;
+
+}
+
+.btn-primary{
+
+background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+border:none;
+
+}
+
+.btn-success{
+
+background:linear-gradient(135deg,#10b981,#22c55e);
+
+border:none;
+
+}
+
+.btn-dark{
+
+background:linear-gradient(135deg,#1f2937,#111827);
+
+border:none;
+
+}
+}

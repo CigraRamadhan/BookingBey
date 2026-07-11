@@ -17,7 +17,7 @@
                 </div>
                 <h4 class="mb-1">{{ Auth::user()->name }}</h4>
                 <p class="text-muted mb-2">{{ Auth::user()->email }}</p>
-                <span class="badge bg-success">Aktif</span>
+                <span class="badge rounded-pill bg-success">Aktif</span>
                 <hr>
                 <div class="text-start small text-muted">
                     <p class="mb-2"><i class="fas fa-calendar-alt me-2"></i> Bergabung: {{ Auth::user()->created_at->format('d F Y') }}</p>

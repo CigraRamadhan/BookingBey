@@ -89,7 +89,7 @@
 
                                 @if($user->role == 'admin')
 
-                                    <span class="badge bg-danger">
+                                    <span class="badge rounded-pill bg-danger">
 
                                         Admin
 

@@ -78,19 +78,19 @@
 
                                 @if($payment->status_pembayaran == 'pending')
 
-                                    <span class="badge bg-warning">
+                                    <span class="badge rounded-pill bg-warning text-dark">
                                         Pending
                                     </span>
 
                                 @elseif($payment->status_pembayaran == 'paid')
 
-                                    <span class="badge bg-success">
+                                    <span class="badge rounded-pill bg-success">
                                         Paid
                                     </span>
 
                                 @else
 
-                                    <span class="badge bg-danger">
+                                    <span class="badge rounded-pill bg-danger">
                                         Failed
                                     </span>
 

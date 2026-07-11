@@ -74,14 +74,14 @@
 
                                 @if($lapangan->status == 'tersedia')
 
-                                    <span class="badge bg-success">
+                                    <span class="badge rounded-pill bg-success">
 
                                         Tersedia
 
                                     </span>
 
                                 @else
-                                    <span class="badge bg-danger">
+                                    <span class="badge rounded-pill bg-danger">
                                         Tidak Tersedia
                                     </span>
                                 @endif

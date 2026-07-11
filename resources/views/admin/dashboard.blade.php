@@ -204,7 +204,7 @@
 
                             <td>
 
-                                <span class="badge bg-success">
+                                <span class="badge rounded-pill bg-success">
 
                                     Approved
 
@@ -224,7 +224,7 @@
 
                             <td>
 
-                                <span class="badge bg-warning">
+                                <span class="badge rounded-pill bg-warning text-dark">
 
                                     Pending
 
@@ -244,7 +244,7 @@
 
                             <td>
 
-                                <span class="badge bg-danger">
+                                <span class="badge rounded-pill bg-danger">
 
                                     Cancelled
 

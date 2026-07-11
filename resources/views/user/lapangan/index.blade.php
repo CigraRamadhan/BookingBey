@@ -34,7 +34,7 @@
                                             <h5 class="card-title">{{ $lapangan->nama }}</h5>
                                             <p class="card-text">{{ Str::limit($lapangan->deskripsi, 100) }}</p>
                                             <div class="mb-2">
-                                                <span class="badge bg-success">Rp
+                                                <span class="badge rounded-pill bg-success">Rp
                                                     {{ number_format($lapangan->harga_per_jam, 0, ',', '.') }}/jam</span>
                                                 <span class="badge bg-info">{{ $lapangan->lokasi }}</span>
                                             </div>
