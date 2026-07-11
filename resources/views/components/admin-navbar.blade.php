@@ -11,7 +11,7 @@
             </button>
 
             {{-- Search --}}
-            <form class="d-none d-md-flex">
+            <form method="GET" action="{{ url()->current() }}" class="d-none d-md-flex">
 
                 <div class="input-group">
 
@@ -19,12 +19,12 @@
                         <i class="bi bi-search"></i>
                     </span>
 
-                    <input type="text" class="form-control border-start-0" placeholder="Cari data...">
+                    <input type="text" name="search" class="form-control border-start-0" placeholder="Cari data..."
+                        value="{{ request('search') }}">
 
                 </div>
 
             </form>
-
         </div>
 
         {{-- Right --}}

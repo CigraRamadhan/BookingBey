@@ -22,6 +22,7 @@ body {
     background: #0F172A;
     color: white;
     z-index: 1000;
+    transition: left .3s ease;
 }
 
 /* ===============================
@@ -32,6 +33,7 @@ body {
     margin-left: 260px;
     min-height: 100vh;
     background: #F8FAFC;
+    transition: margin-left .3s ease;
 }
 
 /* ===============================
@@ -198,26 +200,29 @@ LOGOUT
 RESPONSIVE
 ========================== */
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
 
     .sidebar {
 
-        width: 100%;
-        height: auto;
-        position: relative;
+        position: fixed;
+        top: 0;
+        left: -260px;
 
+        width: 260px;
+        height: 100vh;
+
+        z-index: 2000;
+
+        transition: left .3s ease;
+
+    }
+
+    .sidebar.active {
+        left: 0;
     }
 
     .main-content {
-
         margin-left: 0;
-
-    }
-
-    .admin-navbar {
-
-        padding: 15px;
-
     }
 
 }
@@ -240,8 +245,26 @@ RESPONSIVE
 
 }
 
-.dashboard-card{
+.dashboard-card {
 
-    height:100%;
+    height: 100%;
 
 }
+
+
+.sidebar {
+    transition: all .3s ease;
+}
+
+.main-content {
+    transition: all .3s ease;
+}
+
+.sidebar.hide {
+    left: -260px;
+}
+
+.main-content.expand {
+    margin-left: 0;
+}
+

@@ -9,13 +9,22 @@ use App\Models\Lapangan;
 
 class LapanganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lapangans = Lapangan::latest()->paginate(10);
+        $lapangans = Lapangan::query();
+
+        if ($request->search) {
+
+            $lapangans->where('nama_lapangan', 'like', '%' . $request->search . '%')
+                ->orWhere('jenis', 'like', '%' . $request->search . '%')
+                ->orWhere('lokasi', 'like', '%' . $request->search . '%');
+
+        }
+
+        $lapangans = $lapangans->latest()->paginate(10);
 
         return view('admin.lapangan.index', compact('lapangans'));
     }
-
     public function create()
     {
         //

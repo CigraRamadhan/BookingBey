@@ -25,30 +25,57 @@
 
 
 <body>
-    
+
+
     {{-- Sidebar --}}
     @include('components.admin-sidebar')
-    
+
     {{-- Main Content --}}
-    <div class="main-content">
-        
+    <div class="main-content expand">
+
         {{-- Navbar --}}
         @include('components.admin-navbar')
-        
+
         {{-- Page Content --}}
         <div class="container-fluid py-4">
-            
+
             @yield('content')
-            
+
         </div>
-        
+
     </div>
-    
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('.main-content');
+            const btn = document.getElementById('sidebarToggle');
+
+            btn.addEventListener('click', function () {
+
+                if (window.innerWidth <= 768) {
+                    // Mobile
+                    sidebar.classList.toggle('active');
+                } else {
+                    // Desktop
+                    sidebar.classList.toggle('hide');
+                    main.classList.toggle('expand');
+                }
+
+                
+
+            });
+
+        });
+    </script>
+
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     @yield('scripts')
-    
 </body>
 
 </html>

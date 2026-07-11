@@ -25,4 +25,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('admin.booking.destroy');
     Route::put('/booking/{booking}/payment', [BookingController::class, 'updatePayment'])->name('admin.booking.updatePayment');
 
+    Route::put('payments/{payment}/approve', [PaymentController::class, 'approve'])
+        ->name('payments.approve');
+    Route::put('payments/{payment}/reject', [PaymentController::class, 'reject'])
+        ->name('payments.reject');
+
+
 });

@@ -1,4 +1,4 @@
-<aside class="sidebar d-flex flex-column">
+<aside id="sidebar" class="sidebar d-flex flex-column hide">
 
     {{-- Logo --}}
     <div class="sidebar-header text-center">

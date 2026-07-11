@@ -6,7 +6,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Booking Saya</h2>
-        <a href="{{ route('booking.create') }}" class="btn btn-primary">
+        <a href="{{ route('user.lapangan.index') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Booking Baru
         </a>
     </div>
@@ -36,7 +36,7 @@
                 <tbody>
                     @foreach($bookings as $booking)
                     <tr>
-                        <td>#{{ $booking->id }}</td>
+                        <td>{{ $booking->id }}</td>
                         <td>{{ $booking->lapangan->nama_lapangan ?? 'N/A' }}</td>
                         <td>{{ $booking->tanggal_booking }}</td>
                         <td>{{ $booking->jam_mulai }} - {{ $booking->jam_selesai }}</td>
