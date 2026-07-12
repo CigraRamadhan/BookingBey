@@ -6,19 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Lapangan;
 use App\Models\Payment;
+use App\Http\Controllers\Admin\NotificationController as AdminNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    public function index()
-    {
-        $bookings = Booking::where('user_id', Auth::id())
-            ->with(['lapangan', 'payment'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-        return view('user.booking.index', compact('bookings'));
+    public function index(Request $request)
+{
+    $query = Booking::with('lapangan')
+        ->where('user_id', auth()->id());
+
+    if ($request->status) {
+        $query->where('status', $request->status);
     }
+
+    if ($request->search) {
+        $query->whereHas('lapangan', function ($q) use ($request) {
+            $q->where('nama_lapangan', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    $bookings = $query
+        ->latest()
+        ->paginate(10);
+
+    return view('user.booking.index', compact('bookings'));
+}
 
     public function create($lapangan_id)
     {
@@ -70,18 +84,31 @@ class BookingController extends Controller
             'status_pembayaran' => 'pending',
         ]);
 
+        AdminNotification::kirimKeAdmin(
+            $booking->id,
+            'Booking Baru Masuk',
+            Auth::user()->nama_lengkap . ' memesan lapangan ' . $lapangan->nama_lapangan .
+                ' pada tanggal ' . $booking->tanggal_booking . '.'
+        );
+
         return redirect()
             ->route('user.booking.show', $booking->id)
             ->with('success', 'Booking berhasil dibuat!');
     }
 
-    public function show($id)
-    {
-        $booking = Booking::where('user_id', Auth::id())
-            ->with('lapangan')
-            ->findOrFail($id);
-        return view('user.booking.show', compact('booking'));
+    public function show(Booking $booking)
+{
+    if($booking->user_id != auth()->id()){
+        abort(403);
     }
+
+    $booking->load('lapangan');
+
+    return view(
+        'user.booking.show',
+        compact('booking')
+    );
+}
      public function payment(Request $request, Booking $booking)
     {
         if ($booking->user_id !== Auth::id()) {
@@ -114,6 +141,12 @@ class BookingController extends Controller
         $payment->status_pembayaran = 'pending';
         $payment->save();
 
+        AdminNotification::kirimKeAdmin(
+            $booking->id,
+            'Pembayaran Menunggu Konfirmasi',
+            Auth::user()->nama_lengkap . ' mengirim bukti pembayaran untuk booking #' . $booking->id . '.'
+        );
+
         return redirect()
             ->route('user.booking.show', $booking->id)
             ->with('success', 'Pembayaran sedang diproses. Menunggu konfirmasi admin.');
@@ -136,6 +169,12 @@ class BookingController extends Controller
         if ($booking->payment) {
             $booking->payment->update(['status_pembayaran' => 'failed']);
         }
+
+        AdminNotification::kirimKeAdmin(
+            $booking->id,
+            'Booking Dibatalkan',
+            Auth::user()->nama_lengkap . ' membatalkan booking #' . $booking->id . '.'
+        );
 
         return redirect()
             ->route('user.booking.show', $booking->id)

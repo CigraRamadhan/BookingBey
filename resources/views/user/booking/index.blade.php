@@ -3,6 +3,83 @@
 @section('title', 'Riwayat Booking')
 
 @section('content')
+<div class="card shadow-sm rounded-4 mb-4">
+
+    <div class="card-body">
+
+        <form method="GET">
+
+            <div class="row">
+
+                <div class="col-md-5">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Cari lapangan..."
+                        value="{{ request('search') }}">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    @foreach($bookings as $booking)
+                        {{ $booking->status_booking }}
+
+                        @endforeach
+                    
+                        @if($booking->status_booking == 'pending')
+                    <span class="badge bg-warning">
+                        Pending
+                    </span>
+
+                    @elseif($booking->status_booking=='selesai')
+
+                    <span class="badge bg-success">
+                        Selesai
+                    </span>
+
+                    @else
+
+                    <span class="badge bg-danger">
+                        Dibatalkan
+                    </span>
+
+                    @endif
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-primary w-100">
+
+                        Cari
+
+                    </button>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <a
+                        href="{{ route('user.booking.index') }}"
+                        class="btn btn-secondary w-100">
+
+                        Reset
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Booking Saya</h2>
@@ -17,7 +94,7 @@
 
     @if($bookings->isEmpty())
         <div class="alert alert-info">
-            Anda belum memiliki booking. <a href="{{ route('booking.create') }}">Booking sekarang!</a>
+            Anda belum memiliki booking. <a href="{{ route('user.booking.create') }}">Booking sekarang!</a>
         </div>
     @else
         <div class="table-responsive">
@@ -47,8 +124,16 @@
                             </span>
                         </td>
                         <td>
-                            <a href="{{ route('user.booking.show', $booking->id) }}" class="btn btn-sm btn-info">Detail</a>
-                        </td>
+
+                    <a
+                    href="{{ route('user.booking.show',$booking->id) }}"
+                    class="btn btn-info btn-sm">
+
+                    Detail
+
+                    </a>
+
+                    </td>
                     </tr>
                     @endforeach
                 </tbody>

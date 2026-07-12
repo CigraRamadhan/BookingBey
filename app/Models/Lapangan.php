@@ -32,6 +32,13 @@ class Lapangan extends Model
         ? asset('storage/' . $this->gambar)
         : asset('images/default-lapangan.jpg');
 }
+
+    // Accessor status badge (dipakai di halaman daftar lapangan)
+    public function getStatusBadgeAttribute()
+    {
+        return $this->status === 'tersedia' ? 'Tersedia' : 'Tidak Tersedia';
+    }
+
     // Scope tersedia
     public function scopeTersedia($query)
     {

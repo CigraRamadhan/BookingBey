@@ -11,10 +11,29 @@
                     <span class="badge bg-light text-dark">Total: {{ $lapangans->count() }}</span>
                 </div>
                 <div class="card-body">
+                    <form action="{{ route('user.lapangan.index') }}" method="GET" class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="fas fa-search"></i></span>
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Cari nama lapangan, lokasi, atau jenis..."
+                                value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                            @if(request('search'))
+                                <a href="{{ route('user.lapangan.index') }}" class="btn btn-outline-secondary">Reset</a>
+                            @endif
+                        </div>
+                    </form>
+
                     @if($lapangans->isEmpty())
                         <div class="alert alert-warning text-center">
                             <i class="fas fa-exclamation-triangle fa-2x"></i>
-                            <p class="mt-2">Belum ada lapangan yang tersedia.</p>
+                            <p class="mt-2">
+                                @if(request('search'))
+                                    Tidak ada lapangan yang cocok dengan pencarian "{{ request('search') }}".
+                                @else
+                                    Belum ada lapangan yang tersedia.
+                                @endif
+                            </p>
                         </div>
                     @else
                         <div class="row">
@@ -23,7 +42,7 @@
                                     <div class="card h-100 shadow-sm">
                                         @if($lapangan->gambar)
                                             <img src="{{ asset('storage/' . $lapangan->gambar) }}" class="card-img-top"
-                                                alt="{{ $lapangan->nama }}" style="height: 200px; object-fit: cover;">
+                                                alt="{{ $lapangan->nama_lapangan }}" style="height: 200px; object-fit: cover;">
                                         @else
                                             <div class="bg-secondary text-white text-center py-5">
                                                 <i class="fas fa-image fa-3x"></i>
@@ -31,10 +50,10 @@
                                             </div>
                                         @endif
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ $lapangan->nama }}</h5>
+                                            <h5 class="card-title">{{ $lapangan->nama_lapangan }}</h5>
                                             <p class="card-text">{{ Str::limit($lapangan->deskripsi, 100) }}</p>
                                             <div class="mb-2">
-                                                <span class="badge rounded-pill bg-success">Rp
+                                                <span class="badge bg-success">Rp
                                                     {{ number_format($lapangan->harga_per_jam, 0, ',', '.') }}/jam</span>
                                                 <span class="badge bg-info">{{ $lapangan->lokasi }}</span>
                                             </div>

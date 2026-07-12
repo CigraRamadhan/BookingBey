@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+/* @import 'tailwindcss'; */
 @import './animation.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -181,6 +181,46 @@ padding:0 30px;
 
 box-shadow:0 2px 15px rgba(0,0,0,.08);
 
+flex-wrap:wrap;
+
+gap:15px;
+
+}
+
+.topbar .left{
+
+display:flex;
+
+align-items:center;
+
+gap:20px;
+
+}
+
+.topbar .right{
+
+display:flex;
+
+align-items:center;
+
+gap:22px;
+
+}
+
+.topbar .right > span{
+
+color:#555;
+
+font-size:14px;
+
+white-space:nowrap;
+
+}
+
+#toggleSidebar{
+
+display:none;
+
 }
 
 .search-box{
@@ -206,6 +246,38 @@ border:none;
 background:none;
 
 outline:none;
+
+}
+
+.notification{
+
+width:42px;
+
+height:42px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:#f4f6fb;
+
+border-radius:50%;
+
+font-size:16px;
+
+color:#444;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.notification:hover{
+
+background:#e5e9f4;
 
 }
 
@@ -329,6 +401,12 @@ background:#ef4444;
 
 }
 
+.purple{
+
+background:#7c3aed;
+
+}
+
 .quick-card{
 
 display:block;
@@ -371,4 +449,51 @@ transition:.3s;
 
 transform:scale(1.2);
 
+}
+/* =======================
+   Responsive: Sidebar & Topbar (Mobile)
+   ======================= */
+@media (max-width: 992px){
+
+    .sidebar{
+        left:-260px;
+        z-index:1000;
+    }
+
+    .sidebar.active{
+        left:0;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    #toggleSidebar{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .topbar .right > span{
+        display:none;
+    }
+
+    .search-box{
+        display:none;
+    }
+}
+
+@media (max-width: 576px){
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .profile div small{
+        display:none;
+    }
 }

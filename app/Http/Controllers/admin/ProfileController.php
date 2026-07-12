@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('user.profile.index', compact('user'));
+        return view('admin.profile.index', compact('user'));
     }
 
     public function update(Request $request)
@@ -24,7 +24,6 @@ class ProfileController extends Controller
             'nama_lengkap' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'no_telepon' => 'nullable|string|max:15',
-            'alamat' => 'nullable|string',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -40,10 +39,9 @@ class ProfileController extends Controller
         $user->nama_lengkap = $request->nama_lengkap;
         $user->email = $request->email;
         $user->no_telepon = $request->no_telepon;
-        $user->alamat = $request->alamat;
         $user->save();
 
-        return redirect()->route('user.profile')->with('success', 'Profil berhasil diupdate!');
+        return redirect()->route('admin.profile')->with('success', 'Profil berhasil diperbarui!');
     }
 
     public function updatePassword(Request $request)
@@ -56,27 +54,13 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'Password saat ini salah!']);
+            return back()->withErrors(['current_password' => 'Kata sandi saat ini salah!']);
         }
 
         $user->update([
-            'password' => Hash::make($request->new_password)
+            'password' => Hash::make($request->new_password),
         ]);
 
-        return redirect()->route('user.profile')->with('success', 'Password berhasil diubah!');
-    }
-
-    public function destroy()
-    {
-        $user = Auth::user();
-
-        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-            Storage::disk('public')->delete($user->avatar);
-        }
-
-        Auth::logout();
-        $user->delete();
-
-        return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
+        return redirect()->route('admin.profile')->with('success', 'Kata sandi berhasil diubah!');
     }
 }

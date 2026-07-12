@@ -15,9 +15,9 @@ class Payment extends Model
         'kode_pembayaran',
         'metode_pembayaran',
         'jumlah_bayar',
-        'tanggal_bayar',
-        'bukti_pembayaran',
         'status_pembayaran',
+        'bukti_pembayaran',
+        'tanggal_bayar',
     ];
 
     public function booking()

@@ -8,9 +8,22 @@ use Illuminate\Http\Request;
 
 class LapanganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lapangans = Lapangan::all();
+        $query = Lapangan::query();
+
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+
+            $query->where(function ($q) use ($keyword) {
+                $q->where('nama_lapangan', 'like', "%{$keyword}%")
+                    ->orWhere('lokasi', 'like', "%{$keyword}%")
+                    ->orWhere('jenis', 'like', "%{$keyword}%");
+            });
+        }
+
+        $lapangans = $query->latest()->get();
+
         return view('user.lapangan.index', compact('lapangans'));
     }
 

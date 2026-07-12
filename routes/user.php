@@ -5,6 +5,7 @@ use App\Http\Controllers\User\LapanganController;
 use App\Http\Controllers\User\BookingController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\PaymentController;
+use App\Http\Controllers\User\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,16 +27,17 @@ Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(functi
     Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
     Route::get('/booking/create/{lapangan_id}', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
-    
-    // Payment
-    Route::resource('payment', PaymentController::class);
-    Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
-    Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
-    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-    Route::get('/booking/{booking}', [BookingController::class, 'show'])->name('booking.detail');
+    Route::get('/booking/{booking}', [BookingController::class, 'show'])->name('booking.show');
     Route::post('/booking/{booking}/payment', [BookingController::class, 'payment'])->name('booking.payment');
     Route::put('/booking/{booking}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
+
+    // Payment
+    Route::resource('payment', PaymentController::class);
+
+    // Notification
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/{id}/read', [NotificationController::class, 'read'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'readAll'])->name('notifications.readAll');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

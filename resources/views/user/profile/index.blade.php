@@ -11,13 +11,17 @@
             </div>
             <div class="card-body text-center">
                 <div class="mb-3">
-                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto" style="width: 120px; height: 120px;">
-                        <i class="fas fa-user-circle fa-7x text-secondary"></i>
+                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto overflow-hidden" style="width: 120px; height: 120px;">
+                        @if(Auth::user()->avatar)
+                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Avatar" style="width:100%; height:100%; object-fit:cover;">
+                        @else
+                            <i class="fas fa-user-circle fa-7x text-secondary"></i>
+                        @endif
                     </div>
                 </div>
-                <h4 class="mb-1">{{ Auth::user()->name }}</h4>
+                <h4 class="mb-1">{{ Auth::user()->nama_lengkap }}</h4>
                 <p class="text-muted mb-2">{{ Auth::user()->email }}</p>
-                <span class="badge rounded-pill bg-success">Aktif</span>
+                <span class="badge bg-success">Aktif</span>
                 <hr>
                 <div class="text-start small text-muted">
                     <p class="mb-2"><i class="fas fa-calendar-alt me-2"></i> Bergabung: {{ Auth::user()->created_at->format('d F Y') }}</p>
@@ -56,8 +60,8 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="name" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" required>
+                            <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="{{ Auth::user()->nama_lengkap }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="email" class="form-label">Email</label>

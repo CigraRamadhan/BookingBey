@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\Notification;
 
 class BookingController extends Controller
 {
@@ -52,6 +53,21 @@ class BookingController extends Controller
         $booking->update([
             'status_booking' => $request->status_booking,
         ]);
+
+        $labelStatus = [
+            'menunggu' => 'Menunggu',
+            'konfirmasi' => 'Dikonfirmasi',
+            'selesai' => 'Selesai',
+            'batal' => 'Dibatalkan',
+        ][$request->status_booking] ?? $request->status_booking;
+
+        Notification::kirim(
+            $booking->user_id,
+            $booking->id,
+            'Status Booking Diperbarui',
+            'Booking lapangan ' . ($booking->lapangan->nama_lapangan ?? '') . ' pada tanggal ' .
+                $booking->tanggal_booking . ' sekarang berstatus "' . $labelStatus . '".'
+        );
 
         return redirect()
             ->route('admin.booking.index')

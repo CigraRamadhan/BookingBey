@@ -7,7 +7,7 @@ const bookingData = window.chartBooking ?? {
     data: []
 };
 
-const canvas = document.getElementById('bookingChart');
+// const canvas = document.getElementById('bookingChart');
 
 if (canvas) {
 
