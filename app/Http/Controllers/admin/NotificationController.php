@@ -38,7 +38,7 @@ class NotificationController extends Controller
         }
 
         if ($notification->booking_id) {
-            return redirect()->route('admin.booking.show', $notification->booking_id);
+            return redirect()->route('admin.booking.index', $notification->booking_id);
         }
 
         return redirect()->route('dashboard');

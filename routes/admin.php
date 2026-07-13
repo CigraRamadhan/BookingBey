@@ -20,10 +20,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('admin.profile.password');
 
     // Notification
-    Route::get('/notifications', [NotificationController::class, 'index'])->name('admin.notifications.index');
-    Route::get('/notifications/{id}/read', [NotificationController::class, 'read'])->name('admin.notifications.read');
-    Route::post('/notifications/read-all', [NotificationController::class, 'readAll'])->name('admin.notifications.readAll');
+    Route::get('/notifications', [NotificationController::class, 'index'])
+        ->name('notifications.index');
 
+    Route::get('/notifications/{id}/read', [NotificationController::class, 'read'])
+        ->name('notifications.read');
+
+    Route::post('/notifications/read-all', [NotificationController::class, 'readAll'])
+        ->name('notifications.readAll');
     Route::resource('lapangan', LapanganController::class);
 
     Route::resource('booking', BookingController::class);

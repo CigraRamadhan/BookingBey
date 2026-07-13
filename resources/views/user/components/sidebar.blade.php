@@ -8,9 +8,7 @@
 
         </div>
 
-        <h3>Sport Booking</h3>
-
-        <small>User Panel</small>
+        <h3>Booking Lapang</h3>
 
     </div>
 

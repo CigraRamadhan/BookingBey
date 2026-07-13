@@ -34,7 +34,7 @@
 
                         <h2 class="fw-bold mt-2">
 
-                            12
+                            {{ $totalLapangan }}
 
                         </h2>
 
@@ -68,7 +68,7 @@
 
                         <h2 class="fw-bold mt-2">
 
-                            153
+                            {{ $totalBooking }}
 
                         </h2>
 
@@ -102,7 +102,7 @@
 
                         <h2 class="fw-bold mt-2">
 
-                            67
+                            {{ $totalUser }}
 
                         </h2>
 
@@ -136,7 +136,7 @@
 
                         <h5 class="fw-bold mt-2">
 
-                            Rp12.500.000
+                            Rp{{ number_format($totalRevenue, 0, ',', '.') }}
 
                         </h5>
 
@@ -194,65 +194,21 @@
 
                     <tbody>
 
-                        <tr>
+                        @foreach($latestBookings as $booking)
 
-                            <td>Andi</td>
+                            <tr>
 
-                            <td>Futsal A</td>
+                                <td>{{ $booking->user->nama_lengkap }}</td>
 
-                            <td>12 Juli 2026</td>
+                                <td>{{ $booking->lapangan->nama_lapangan }}</td>
 
-                            <td>
+                                <td>{{ $booking->tanggal_booking }}</td>
 
-                                <span class="badge rounded-pill bg-success">
+                                <td>{!! $booking->status_badge !!}</td>
 
-                                    Approved
+                            </tr>
 
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Budi</td>
-
-                            <td>Badminton B</td>
-
-                            <td>13 Juli 2026</td>
-
-                            <td>
-
-                                <span class="badge rounded-pill bg-warning text-dark">
-
-                                    Pending
-
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Siti</td>
-
-                            <td>Basket Indoor</td>
-
-                            <td>15 Juli 2026</td>
-
-                            <td>
-
-                                <span class="badge rounded-pill bg-danger">
-
-                                    Cancelled
-
-                                </span>
-
-                            </td>
-
-                        </tr>
+                        @endforeach
 
                     </tbody>
 
@@ -301,13 +257,13 @@
 
             data: {
 
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                labels: @json($bulan),
 
                 datasets: [{
 
                     label: 'Booking',
 
-                    data: [12, 19, 8, 15, 30, 26],
+                    data: @json($total),
 
                     borderWidth: 3,
 
@@ -321,26 +277,6 @@
 
         });
 
-        new Chart(ctx, {
-
-            type: 'line',
-
-            data: { ...},
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false
-
-            }
-
-                options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-        
     </script>
 
 @endsection

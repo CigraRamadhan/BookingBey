@@ -10,11 +10,6 @@
         <h4 class="logo-title">
             Booking Lapangan
         </h4>
-
-        <small class="text-secondary">
-            Admin Panel
-        </small>
-
     </div>
 
     <hr class="sidebar-divider">
