@@ -6,15 +6,19 @@
     <i class="fas fa-bars"></i>
 </button>
 
-        <div class="search-box">
+        <form class="search-box" action="{{ route('user.lapangan.index') }}" method="GET">
 
-            <i class="fas fa-search"></i>
+            <button type="submit" class="search-box-btn" aria-label="Cari">
+                <i class="fas fa-search"></i>
+            </button>
 
             <input
                 type="text"
+                name="search"
+                value="{{ request('search') }}"
                 placeholder="Cari data...">
 
-        </div>
+        </form>
 
     </div>
 
@@ -77,6 +81,18 @@
 </div>
 
 <style>
+.search-box-btn{
+    border:none;
+    background:none;
+    padding:0;
+    margin:0;
+    display:flex;
+    align-items:center;
+    color:inherit;
+    font-size:inherit;
+    cursor:pointer;
+}
+
 .notif-wrapper{
     position:relative;
 }

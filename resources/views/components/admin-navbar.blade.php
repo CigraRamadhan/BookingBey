@@ -11,7 +11,15 @@
             </button>
 
             {{-- Search --}}
-            <form method="GET" action="{{ url()->current() }}" class="d-none d-md-flex">
+            @php
+                // Halaman-halaman ini sudah punya logika pencarian sendiri di controller-nya,
+                // jadi biarkan form search tetap submit ke halaman yang sama.
+                // Di halaman lain (mis. Dashboard) yang tidak punya data untuk difilter,
+                // arahkan pencarian ke daftar booking supaya tetap berfungsi.
+                $isSearchablePage = request()->routeIs(['admin.lapangan.*', 'admin.booking.*', 'admin.payments.*', 'admin.users.*']);
+                $searchAction = $isSearchablePage ? url()->current() : route('admin.booking.index');
+            @endphp
+            <form method="GET" action="{{ $searchAction }}" class="d-none d-md-flex">
 
                 <div class="input-group">
 

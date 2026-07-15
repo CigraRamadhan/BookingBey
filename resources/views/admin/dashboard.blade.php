@@ -102,7 +102,7 @@
 
                         <h2 class="fw-bold mt-2">
 
-                            {{ $totalUser }}
+                            {{ $totalUsers }}
 
                         </h2>
 
@@ -136,7 +136,7 @@
 
                         <h5 class="fw-bold mt-2">
 
-                            Rp{{ number_format($totalRevenue, 0, ',', '.') }}
+                            Rp{{ number_format($revenue, 0, ',', '.') }}
 
                         </h5>
 
@@ -194,21 +194,27 @@
 
                     <tbody>
 
-                        @foreach($latestBookings as $booking)
-
+                        @forelse($bookingTerbaru as $booking)
                             <tr>
 
-                                <td>{{ $booking->user->nama_lengkap }}</td>
+                                <td>{{ $booking->user->nama_lengkap ?? '-' }}</td>
 
-                                <td>{{ $booking->lapangan->nama_lapangan }}</td>
+                                <td>{{ $booking->lapangan->nama_lapangan ?? '-' }}</td>
 
-                                <td>{{ $booking->tanggal_booking }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->tanggal_booking)->translatedFormat('d F Y') }}</td>
 
-                                <td>{!! $booking->status_badge !!}</td>
+                                <td>
+                                    {!! $booking->status_badge !!}
+                                </td>
 
                             </tr>
-
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    Belum ada data booking.
+                                </td>
+                            </tr>
+                        @endforelse
 
                     </tbody>
 
@@ -257,13 +263,13 @@
 
             data: {
 
-                labels: @json($bulan),
+                labels: {!! json_encode($chartLabels) !!},
 
                 datasets: [{
 
                     label: 'Booking',
 
-                    data: @json($total),
+                    data: {!! json_encode($chartData) !!},
 
                     borderWidth: 3,
 
@@ -273,10 +279,18 @@
 
                 }]
 
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false
+
             }
 
         });
-
+        
     </script>
 
 @endsection

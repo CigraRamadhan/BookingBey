@@ -1,57 +1,52 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Lapangan;
 use App\Models\Payment;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->search;
-
         $totalLapangan = Lapangan::count();
         $totalBooking = Booking::count();
-        $totalUser = User::where('role', 'user')->count();
+        $totalUsers = User::where('role', 'user')->count();
+        $revenue = Payment::where('status_pembayaran', 'paid')->sum('jumlah_bayar');
 
-        $totalRevenue = Payment::where('status_pembayaran', 'paid')
-            ->sum('jumlah_bayar');
-
-        $latestBookings = Booking::with(['user', 'lapangan'])
+        $bookingTerbaru = Booking::with(['user', 'lapangan'])
             ->latest()
             ->take(5)
             ->get();
 
-        $bookingChart = Booking::select(
-            DB::raw('MONTH(tanggal_booking) as bulan'),
-            DB::raw('COUNT(*) as total')
-        )
+        // Statistik booking per bulan untuk tahun berjalan
+        $bookingPerBulan = Booking::selectRaw('MONTH(tanggal_booking) as bulan, COUNT(*) as total')
+            ->whereYear('tanggal_booking', now()->year)
             ->groupBy('bulan')
-            ->orderBy('bulan')
-            ->get();
+            ->pluck('total', 'bulan');
 
-        $bulan = [];
-        $total = [];
+        $namaBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
-        foreach ($bookingChart as $item) {
-            $bulan[] = date('M', mktime(0, 0, 0, $item->bulan, 1));
-            $total[] = $item->total;
+        $chartLabels = [];
+        $chartData = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $chartLabels[] = $namaBulan[$i - 1];
+            $chartData[] = $bookingPerBulan[$i] ?? 0;
         }
 
         return view('admin.dashboard', compact(
             'totalLapangan',
             'totalBooking',
-            'totalUser',
-            'totalRevenue',
-            'latestBookings',
-            'bulan',
-            'total'
+            'totalUsers',
+            'revenue',
+            'bookingTerbaru',
+            'chartLabels',
+            'chartData'
         ));
     }
 }
