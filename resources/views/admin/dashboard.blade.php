@@ -34,7 +34,7 @@
 
                         <h2 class="fw-bold mt-2">
 
-                            12
+                            {{ $totalLapangan }}
 
                         </h2>
 
@@ -68,7 +68,7 @@
 
                         <h2 class="fw-bold mt-2">
 
-                            153
+                            {{ $totalBooking }}
 
                         </h2>
 
@@ -102,7 +102,7 @@
 
                         <h2 class="fw-bold mt-2">
 
-                            67
+                            {{ $totalUsers }}
 
                         </h2>
 
@@ -136,7 +136,7 @@
 
                         <h5 class="fw-bold mt-2">
 
-                            Rp12.500.000
+                            Rp{{ number_format($revenue, 0, ',', '.') }}
 
                         </h5>
 
@@ -194,65 +194,27 @@
 
                     <tbody>
 
-                        <tr>
+                        @forelse($bookingTerbaru as $booking)
+                            <tr>
 
-                            <td>Andi</td>
+                                <td>{{ $booking->user->nama_lengkap ?? '-' }}</td>
 
-                            <td>Futsal A</td>
+                                <td>{{ $booking->lapangan->nama_lapangan ?? '-' }}</td>
 
-                            <td>12 Juli 2026</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->tanggal_booking)->translatedFormat('d F Y') }}</td>
 
-                            <td>
+                                <td>
+                                    {!! $booking->status_badge !!}
+                                </td>
 
-                                <span class="badge rounded-pill bg-success">
-
-                                    Approved
-
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Budi</td>
-
-                            <td>Badminton B</td>
-
-                            <td>13 Juli 2026</td>
-
-                            <td>
-
-                                <span class="badge rounded-pill bg-warning text-dark">
-
-                                    Pending
-
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Siti</td>
-
-                            <td>Basket Indoor</td>
-
-                            <td>15 Juli 2026</td>
-
-                            <td>
-
-                                <span class="badge rounded-pill bg-danger">
-
-                                    Cancelled
-
-                                </span>
-
-                            </td>
-
-                        </tr>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    Belum ada data booking.
+                                </td>
+                            </tr>
+                        @endforelse
 
                     </tbody>
 
@@ -301,13 +263,13 @@
 
             data: {
 
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                labels: {!! json_encode($chartLabels) !!},
 
                 datasets: [{
 
                     label: 'Booking',
 
-                    data: [12, 19, 8, 15, 30, 26],
+                    data: {!! json_encode($chartData) !!},
 
                     borderWidth: 3,
 
@@ -317,15 +279,7 @@
 
                 }]
 
-            }
-
-        });
-
-        new Chart(ctx, {
-
-            type: 'line',
-
-            data: { ...},
+            },
 
             options: {
 
@@ -335,10 +289,6 @@
 
             }
 
-                options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
         });
         
     </script>
